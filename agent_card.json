@@ -1,0 +1,87 @@
+{
+  "name": "adk_spiffe_demo_agent",
+  "description": "Google ADK Demo Agent featuring Agent-to-Agent (A2A) protocol, ambient SPIFFE Agent Identity, and 3LO Agent Auth Manager user delegation.",
+  "version": "1.0.0",
+  "protocolVersion": "1.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true
+  },
+  "skills": [
+    {
+      "name": "get_user_calendar_events",
+      "description": "Retrieves upcoming Google Calendar events for the authenticated end user using 3LO delegated OAuth credentials.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "description": "Target start date (e.g., 'today', 'tomorrow', '2026-09-01')"
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of calendar entries to return",
+            "default": 5
+          }
+        }
+      },
+      "securityRequirements": [
+        {
+          "agent_3lo_oauth": [
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_user_profile",
+      "description": "Retrieves the authenticated user's identity profile via 3-Legged OAuth token verification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "securityRequirements": [
+        {
+          "agent_3lo_oauth": [
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email"
+          ]
+        }
+      ]
+    }
+  ],
+  "securitySchemes": {
+    "agent_3lo_oauth": {
+      "type": "oauth2",
+      "description": "Google Cloud Agent Auth Manager 3-Legged OAuth (3LO) user delegation flow.",
+      "flows": {
+        "authorizationCode": {
+          "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+          "tokenUrl": "https://oauth2.googleapis.com/token",
+          "scopes": {
+            "https://www.googleapis.com/auth/calendar.readonly": "Read-only access to user calendar events",
+            "https://www.googleapis.com/auth/userinfo.profile": "View user profile details",
+            "https://www.googleapis.com/auth/userinfo.email": "View user primary email address"
+          }
+        }
+      }
+    },
+    "spiffe_ambient_identity": {
+      "type": "mutualTLS",
+      "description": "Zero-trust ambient SPIFFE Agent Identity: principal://agents.global.org-{ORG_ID}.system.id.goog/resources/aiplatform/projects/{PROJECT_NUM}/locations/{LOCATION}/reasoningEngines/{ENGINE_ID}"
+    }
+  },
+  "supportedInterfaces": [
+    {
+      "url": "http://127.0.0.1:8000/",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    },
+    {
+      "url": "http://127.0.0.1:8000/a2a/v1/message",
+      "protocolBinding": "HTTP_JSON",
+      "protocolVersion": "1.0"
+    }
+  ]
+}
