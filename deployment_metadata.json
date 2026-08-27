@@ -9,5 +9,5 @@
   "outbound_binding": "adk-spiffe-agent-binding",
   "protocol": "A2A v1.0",
   "model": "gemini-2.5-flash",
-  "deployed_at": "2026-08-27T18:26:19.976961+00:00"
+  "deployed_at": "2026-08-27T18:38:04.574098+00:00"
 }

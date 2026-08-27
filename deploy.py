@@ -77,7 +77,7 @@ def deploy_to_vertex_agent_engine() -> dict:
     try:
         import vertexai
         from vertexai import agent_engines
-        from agent import create_demo_agent
+        from adk_spiffe_agent.agent import create_demo_agent
 
         staging_bucket = os.getenv("STAGING_BUCKET", f"gs://{PROJECT_ID}-agent-runtime-staging")
         vertexai.init(project=PROJECT_ID, location=LOCATION, staging_bucket=staging_bucket)
@@ -94,11 +94,13 @@ def deploy_to_vertex_agent_engine() -> dict:
             "sse-starlette>=2.1.0",
             "cloudpickle>=3.0.0",
         ]
+        extra_pkgs = ["adk_spiffe_agent"]
 
         logger.info("Deploying Agent Engine to Vertex AI Agent Runtime...")
         remote_engine = agent_engines.create(
             agent_engine=demo_agent,
             requirements=reqs,
+            extra_packages=extra_pkgs,
             display_name="ADK SPIFFE Demo Agent",
             description="A2A Demo Agent with SPIFFE Ambient Identity and 3LO User Delegation",
         )
