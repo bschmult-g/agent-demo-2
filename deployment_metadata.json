@@ -1,13 +1,16 @@
 {
-  "status": "deployed",
+  "status": "deployed_active",
   "agent_name": "adk_spiffe_demo_agent",
-  "resource_name": "projects/799321431260/locations/us-central1/reasoningEngines/adk-spiffe-agent-engine",
-  "engine_id": "adk-spiffe-agent-engine",
-  "spiffe_principal": "principal://agents.global.org-799321431260.system.id.goog/resources/aiplatform/projects/799321431260/locations/us-central1/reasoningEngines/adk-spiffe-agent-engine",
+  "resource_name": "projects/green-carrier-500109-k2/locations/us-central1/reasoningEngines/1582387997637083136",
+  "engine_id": "1582387997637083136",
+  "spiffe_principal": "principal://agents.global.org-799321431260.system.id.goog/resources/aiplatform/projects/799321431260/locations/us-central1/reasoningEngines/1582387997637083136",
   "auth_provider": "projects/green-carrier-500109-k2/locations/us-central1/authProviders/agent-3lo-auth-provider",
   "granted_role": "roles/agentidentity.user",
   "outbound_binding": "adk-spiffe-agent-binding",
   "protocol": "A2A v1.0",
   "model": "gemini-2.5-flash",
-  "deployed_at": "2026-08-27T18:38:04.574098+00:00"
+  "project_id": "green-carrier-500109-k2",
+  "project_number": "799321431260",
+  "location": "us-central1",
+  "deployed_at": "2026-08-27T23:43:18Z"
 }
